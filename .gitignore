@@ -20,6 +20,3 @@ npm-debug.log*
 wallet/
 *.pem
 *.p12
-
-package-lock.json
-package.json
