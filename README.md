@@ -35,7 +35,7 @@ Oracle Database 실습 리포지토리입니다. 데이터베이스 개론 수�
   - 이름으로 학생 검색 (`sql02.js`)
   - 학생 등록 (`sql03.js`)
 
-### Week 07 - 웹 애플리케이션 개발
+### Week 09 - 웹 애플리케이션 개발
 - 📁 `web/`
   - Express.js 기반 웹 애플리케이션 구성
   - 공통 레이아웃 (`index.ejs`, `menubar.ejs`, `bottom.ejs`)
