@@ -52,6 +52,14 @@ Oracle Database 실습 리포지토리입니다. 데이터베이스 개론 수�
   - 교수 등록 페이지 구현 (`GET /haksa/pro/insert`)
   - 교수 등록 처리 구현 (`POST /haksa/pro/insert`)
 
+### Week 11 - 교수 삭제 및 학생 등록/삭제 기능 구현
+- 📁 `web/`
+  - 교수 삭제 기능 구현 (`POST /haksa/pro/delete`)
+  - 학생 등록 페이지 구현 (`GET /haksa/stu/insert`)
+  - 학생 등록 처리 구현 (`POST /haksa/stu/insert`)
+  - 학생 삭제 기능 구현 (`POST /haksa/stu/delete`)  
+
+
 ## 🚀 설치 및 설정
 
 ### 사전 요구사항
@@ -107,10 +115,14 @@ node ex02/sql02.js
 cd web
 npm start
 ```
+### 또는 
+```bash
+npx nodemon
+```
 
 브라우저에서 접속:
 ```text
-http://localhost:3001
+http://localhost:3000
 ```
 
 ## 🔗 주요 경로
@@ -120,10 +132,15 @@ http://localhost:3001
 - `GET /haksa/pro/list.json` - 교수 목록 JSON 조회
 - `GET /haksa/pro/insert` - 교수 등록 페이지
 - `POST /haksa/pro/insert` - 교수 등록 처리
+- `POST /haksa/pro/delete` - 교수 삭제 처리
 - `GET /haksa/stu` - 학생 관리 페이지
+- `GET /haksa/stu/list.json` - 학생 목록 JSON 조회
+- `GET /haksa/stu/insert` - 학생 등록 페이지
+- `POST /haksa/stu/insert` - 학생 등록 처리
+- `POST /haksa/stu/delete` - 학생 삭제 처리
 - `GET /haksa/cou` - 강좌 관리 페이지
 
-## 📝 연락
+## 📝 
 
 - GitHub: [@EUNTELLA](https://github.com/EUNTELLA)
 - 수업: 데이터베이스 개론
