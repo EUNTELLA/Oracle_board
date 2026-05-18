@@ -47,6 +47,16 @@ const temp = Handlebars.compile($("#temp_students").html());
 $("#tbl_students").html(temp(data));
 ```
 
+## 비동기 Ajax 흐름
+
+Ajax 요청은 페이지 전체를 다시 로드하지 않고 데이터를 가져온다. `success` 콜백은 서버 응답을 받을 때 실행된다.
+
+- 요청은 비동기이므로 `$.ajax()` 다음 줄이 즉시 실행된다.
+- 서버에서 데이터를 받기 전에 `data`를 사용하면 값이 없을 수 있다.
+- 따라서 템플릿 렌더링은 `success` 내부에서 해야 한다.
+
+서버에서는 JSON 데이터를 `res.send(result.rows)`로 보낸다. 브라우저는 이를 받아서 Handlebars로 변환한다.
+
 ## data 속성
 
 jQuery의 `.data()`로 값을 읽으려면 HTML 속성 이름을 `data-`로 시작해야 한다.

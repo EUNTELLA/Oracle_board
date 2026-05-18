@@ -36,6 +36,31 @@ const year = req.body.year;
 const pcode = req.body.pcode;
 ```
 
+### `req.body`가 필요한 이유
+
+`app.js`에서 `express.urlencoded({ extended: false })`가 설정되어 있어야 HTML form 데이터가 `req.body`에 들어온다. 이것을 빼먹으면 `undefined`가 된다.
+
+### 왜 async/await를 쓰나?
+
+DB 연결과 SQL 실행은 외부 I/O 작업이다. `await`를 쓰면 서버가 결과가 준비될 때까지 기다렸다가 다음 코드를 실행한다.
+
+```javascript
+router.post('/stu/insert', async function (req, res) {
+    let con;
+    try {
+        con = await getConnection();
+        const result = await con.execute(sql, bindData, { autoCommit: true });
+        res.sendStatus(200);
+    } catch (err) {
+        console.log(err);
+    } finally {
+        if (con) await con.close();
+    }
+});
+```
+
+`await` 없이 `con.execute()`를 바로 쓰면 SQL 실행 결과를 받기 전에 다음 코드가 실행되어 응답이 잘못될 수 있다.
+
 DB 등록은 바인드 변수로 처리한다.
 
 ```javascript
@@ -45,6 +70,15 @@ sql += `values(:scode, :sname, :dept, to_date(:birthday,'YYYY-MM-DD'), :year, :p
 await con.execute(sql, { scode, sname, dept, birthday, year, pcode }, {
     autoCommit: true
 });
+```
+
+### 교수 등록 코드 주의점
+
+`haksa.js`의 교수 등록 코드에는 문자열을 직접 이어붙여 SQL을 만드는 부분이 있다. 시험에서는 안전한 바인드 변수를 쓰는 방식이 정답이다.
+
+```javascript
+const sql = 'insert into professors(pcode, pname, dept, hiredate, title, salary) ';
+sql += `values(:pcode, :pname, :dept, TO_DATE(:hiredate,'YYYY-MM-DD'), :title, :salary)`;
 ```
 
 ## 삭제

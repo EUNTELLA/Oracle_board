@@ -37,6 +37,26 @@ res.render('index', {
 
 `views` 폴더의 파일은 URL로 직접 여는 파일이 아니라, Express 라우터에서 `res.render()`로 렌더링하는 파일이다.
 
+### pageName의 역할
+
+`index.ejs`는 공통 레이아웃이고, 실제 내용은 `pageName`으로 전달된다. 이 구조를 시험에 물어볼 수 있다.
+
+서버:
+
+```javascript
+res.render('index', { title: '학생관리', pageName: 'haksa/students.ejs' });
+```
+
+레이아웃:
+
+```ejs
+<%- include("menubar") %>
+<%- include(pageName) %>
+<%- include("bottom") %>
+```
+
+`pageName`에 들어가는 파일 이름이 정확해야 정상적으로 화면이 나온다.
+
 ## EJS 변수 출력
 
 서버에서 넘긴 값은 EJS에서 `<%= %>`로 출력한다.

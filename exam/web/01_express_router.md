@@ -19,6 +19,17 @@ web/bin/www
 - `web/views/`: EJS 화면 파일
 - `web/connect.js`: Oracle DB 연결 설정
 
+## app.js 미들웨어와 body parsing
+
+`app.js`에는 POST 요청의 데이터를 읽기 위한 미들웨어가 있다.
+
+```javascript
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+```
+
+HTML form 데이터를 받으려면 `express.urlencoded()`가 필요하다. 이 없으면 `req.body`가 undefined가 된다.
+
 ## 라우터 연결
 
 `app.js`에서 라우터를 연결하면 해당 경로 아래로 요청이 들어온다.

@@ -4,9 +4,19 @@
 
 Oracle DB 연결은 `web/connect.js`에서 처리한다.
 
+이 프로젝트는 Oracle 11g 이하 버전을 사용할 경우 `thick mode`를 활성화하기 위해 `oracledb.initOracleClient()`를 먼저 호출한다.
+
 ```javascript
 const oracledb = require('oracledb');
+try {
+    oracledb.initOracleClient({ libDir: 'C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin' });
+} catch (err) {
+    console.log('오라클 클라이언트 초기화 실패', err);
+    process.exit(1);
+}
+```
 
+```javascript
 async function getConnection() {
     const connection = await oracledb.getConnection({
         user: 'board',
