@@ -59,6 +59,14 @@ Oracle Database 실습 리포지토리입니다. 데이터베이스 개론 수�
   - 학생 등록 처리 구현 (`POST /haksa/stu/insert`)
   - 학생 삭제 기능 구현 (`POST /haksa/stu/delete`)  
 
+### Week 12 - 게시판 기능 구현
+- 📁 `web/`
+  - 게시글 목록 API 구현 (`GET /board/list.json`)
+  - 게시글 목록 페이지 구현 (`GET /board`)
+  - 로그인 페이지 구현 (`GET /users/login`)
+  - 로그인 처리 구현 (`POST /users/login`)
+  - 세션 스토리지 기반 로그아웃 처리 구현
+  
 
 ## 🚀 설치 및 설정
 
@@ -139,6 +147,10 @@ http://localhost:3000
 - `POST /haksa/stu/insert` - 학생 등록 처리
 - `POST /haksa/stu/delete` - 학생 삭제 처리
 - `GET /haksa/cou` - 강좌 관리 페이지
+- `GET /board` - 게시글 목록 페이지
+- `GET /board/list.json` - 게시글 목록 JSON 조회
+- `GET /users/login` - 로그인 페이지
+- `POST /users/login` - 로그인 처리
 
 ## 📝 
 

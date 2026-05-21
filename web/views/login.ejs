@@ -1,3 +1,54 @@
 <div class="my-5">
-    <h1 class="text-center">로그인</h1>
+    <div class="row justify-content-center">
+        <div class="col-8 col-md-5 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="text-center">로그인</h1>
+                </div>
+                <div class="card-body">
+                    <form id="frm">
+                        <input value="92414029" name="scode" class="form-control" placeholder="학생번호">
+                        <input value="1234" name="pass" class="form-control" placeholder="비밀번호" type="password">
+                        <button class="w-100 btn btn-primary">로그인</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+    $(frm).on("submit", function (e) {
+        e.preventDefault();
+        const scode = $(frm.scode).val();
+        const pass = $(frm.pass).val();
+        if (scode == "" || pass == "") {
+            alert("학번과 비밀번호를 입력하세요.");
+        } else {
+            //로그인 체크 
+            $.ajax({
+                type: "post",
+                url: "/users/login",
+                data: { scode, pass },
+                success: function (data) {
+                    console.log(data.PASS);
+                    if (!data) {
+                        alert("해당 학번이 존재하지 않습니다.");
+                        $(frm.scode).focus();
+                    } else if (data.PASS != pass) {
+                        alert("비밀번호가 일치하지 않습니다.");
+                        $(frm.pass).focus();
+                    } else {
+                        // 로그인 성공
+                        // alert('성공');
+                        // 세션 스토리지에 로그인 정보 저장
+                        // 세션이 끊기면 사라지는 저장소
+                        sessionStorage.setItem("sname", data.SNAME);
+                        sessionStorage.setItem("scode", data.SCODE);
+                        // 페이지 이동
+                        location.href = "/";
+                    }
+                }
+            })
+        }
+    });
+</script>
