@@ -11,6 +11,7 @@
 5. [CRUD 라우트 흐름](web/05_crud_routes.md)
 6. [Oracle View](web/06_oracle_view.md)
 7. [자주 발생한 오류](web/07_errors.md)
+8. [게시판 SQL 정리](web/09_board_sql.md)
 
 ## 빠르게 찾기
 
@@ -22,6 +23,7 @@
 - `view_students`를 다시 만들어야 할 때: [Oracle View](web/06_oracle_view.md)
 - ORA 에러가 날 때: [자주 발생한 오류](web/07_errors.md)
 - 시험에 나올 만한 핵심 개념: [시험 핵심 정리](web/08_exam_concepts.md)
+- 게시판 테이블, 뷰, 샘플 데이터가 필요할 때: [게시판 SQL 정리](web/09_board_sql.md)
 
 ## 시험 대비 핵심 요약
 
@@ -32,4 +34,3 @@
 5. SQL에 값 넣을 때는 `:scode`, `:pcode` 같은 바인드 변수를 사용하면 안전하다.
 6. `express.urlencoded({ extended: false })`가 없으면 POST form 값이 `req.body`에 들어오지 않는다.
 7. `view_students`는 students와 professors를 조인한 View이고, `pcode(+)`는 Oracle 외부 조인이다.
-
