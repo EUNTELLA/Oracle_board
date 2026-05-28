@@ -13,7 +13,7 @@ Oracle Database 실습 리포지토리입니다. 데이터베이스 개론 수�
 
 ## 🛠 기술 스택
 
-- **Database**: Oracle Database 11g XE
+- **Database**: Oracle Database 21c XE
 - **Backend**: Node.js, Express.js
 - **View Engine**: EJS
 - **Frontend**: Bootstrap, jQuery, Handlebars
@@ -68,14 +68,19 @@ Oracle Database 실습 리포지토리입니다. 데이터베이스 개론 수�
   - 세션 스토리지 기반 로그아웃 처리 구현
   
 
+### Week 13 - Oracle 21c XE 환경 정리
+- 📁 `exam/web/09_board_sql.md`
+  - Oracle 12c 이상 `IDENTITY` 기반 게시글 테이블 SQL 정리
+  - `vposts`, `view_posts` 게시글 목록 뷰 정리
+  - 게시글 검색/페이징 화면 구성 정리
+
 ## 🚀 설치 및 설정
 
 ### 사전 요구사항
-- Oracle Database 11g XE 설치
+- Oracle Database 21c XE 설치
 - Node.js 16+ 설치
-- Oracle Client DLL 경로 설정
-  - 현재 웹 설정 파일은 `web/connect.js`입니다.
-  - Oracle XE 기본 경로 예시: `C:\oraclexe\app\oracle\product\11.2.0\server\bin`
+- `node-oracledb` thin mode 사용
+  - Oracle Client DLL 경로 설정이나 `initOracleClient()` 호출 없이 접속합니다.
 
 ### 설치
 ```bash
@@ -88,17 +93,17 @@ npm install
 ```
 
 ### 환경 설정
-`web/connect.js`의 Oracle Client 경로와 DB 연결 정보를 환경에 맞게 수정하세요.
+`web/connect.js`의 DB 연결 정보를 환경에 맞게 수정하세요.
 
 ```javascript
-oracledb.initOracleClient({
-    libDir: 'C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin'
+connection = await oracledb.getConnection({
+    user: 'board',
+    password: '1234',
+    connectionString: 'localhost:1521/XEPDB1'
 });
-
-user: 'board',
-password: 'pass',
-connectionString: 'localhost:1521/xe'
 ```
+
+게시판 테이블과 뷰 생성 SQL은 `exam/web/09_board_sql.md`에 정리되어 있습니다.
 
 ## 💻 사용 방법
 
