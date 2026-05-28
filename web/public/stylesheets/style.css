@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Gaegu&family=Single+Day&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
 
 
 
 body {
-    font-family: "Gaegu", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+    font-family: "IBM Plex Sans KR", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
