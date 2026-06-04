@@ -2,6 +2,27 @@
 
 Oracle 12c 이상 기준이다. `posts.id`는 `IDENTITY`로 자동 증가시키므로 별도 시퀀스를 만들지 않는다.
 
+## 현재 상태에서 먼저 확인
+
+이미 게시판 실습을 한 번 진행했다면 테이블과 컬럼이 이미 있을 수 있다.
+
+```sql
+SELECT *
+FROM posts;
+
+SELECT *
+FROM view_posts;
+```
+
+둘 다 조회되면 `students.pass`, `posts`, `view_posts` 준비가 끝난 상태다. 이 경우 `ALTER TABLE students ADD pass ...`와 `CREATE TABLE posts ...`는 다시 실행하지 않는다.
+
+이미 있는 객체를 다시 만들면 아래 오류가 나는 것이 정상이다.
+
+```text
+ORA-01430: 추가하려는 열이 이미 테이블에 존재합니다
+ORA-00955: 기존의 객체가 이름을 사용하고 있습니다
+```
+
 ## 학생 비밀번호 컬럼
 
 ```sql
@@ -16,6 +37,8 @@ COMMIT;
 이미 `pass` 컬럼이 있으면 `ALTER TABLE`은 실행하지 않고 `UPDATE`만 실행한다.
 
 ## posts 테이블 생성
+
+이미 `posts` 테이블이 있으면 이 부분은 실행하지 않는다.
 
 ```sql
 CREATE TABLE posts (
@@ -99,6 +122,57 @@ FROM posts;
 SELECT *
 FROM view_posts
 WHERE rn BETWEEN 1 AND 10;
+```
+
+## Node 게시글 목록 조회 코드
+
+`web/routes/posts.js`의 `/board/list.json`에서 `view_posts`를 조회한다.
+
+시험 방식처럼 문자열을 `sql += ...`로 붙여 쓸 때는 각 SQL 조각 끝에 공백을 넣어야 한다.
+
+```javascript
+let page = Number(req.query.page) || 1;
+let size = Number(req.query.size) || 5;
+let word = req.query.word || "";
+let offset_rows = (page - 1) * size;
+
+let sql = "select * from view_posts ";
+sql += `where title like '%${word}%' or content like '%${word}%' or sname like '%${word}%' `;
+sql += "order by id desc ";
+sql += `offset ${offset_rows} rows fetch next ${size} rows only`;
+
+let result = await con.execute(sql, {}, { outFormat: oracledb.OUT_FORMAT_OBJECT });
+list = result.rows;
+
+sql = "select count(*) from view_posts ";
+sql += `where title like '%${word}%' or content like '%${word}%' or sname like '%${word}%'`;
+
+result = await con.execute(sql);
+count = result.rows[0][0];
+```
+
+주의할 점:
+
+- `"select * from view_posts "`처럼 마지막에 공백이 있어야 한다.
+- `where ... ` 뒤에도 공백이 있어야 `order by`와 붙지 않는다.
+- `"order by id desc "` 뒤에도 공백이 있어야 `offset`과 붙지 않는다.
+- `${offset_rows}`, `${size}`를 값으로 넣는 줄은 백틱을 사용한다.
+
+공백이 없으면 실제 SQL이 아래처럼 붙어서 `ORA-00933`이 발생한다.
+
+```sql
+select * from view_postswhere title like '%%' order by id descoffset 0 rows fetch next 5 rows only
+```
+
+## 화면 흐름
+
+```text
+GET /board
+-> board/list.ejs 출력
+-> AJAX로 /board/list.json?page=1&size=5 요청
+-> posts.js에서 view_posts 조회
+-> { list, count } JSON 반환
+-> list.ejs에서 Handlebars로 테이블 출력
 ```
 
 ## 주의
