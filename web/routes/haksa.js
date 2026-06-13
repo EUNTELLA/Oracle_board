@@ -175,4 +175,23 @@ router.get('/cou', function (req, res, next) {
     res.render('index', { title: '강좌관리', pageName: 'haksa/course.ejs' });
 });
 
+/* 강좌 데이터 출력 */
+router.get('/cou/list.json', async function (req, res) {
+    let con;
+    try {
+        con = await getConnection();
+        let sql = "select c.*, p.pname ";
+        sql += "from courses c, professors p ";
+        sql += "where c.instructor = p.pcode(+) ";
+        sql += "order by c.lcode";
+        const result = await con.execute(sql, {}, { outFormat: oracledb.OUT_FORMAT_OBJECT });
+        res.send(result.rows);
+    } catch (err) {
+        console.log('강좌 데이터', err.message);
+        res.sendStatus(500);
+    } finally {
+        if (con) await con.close();
+    }
+});
+
 module.exports = router;
