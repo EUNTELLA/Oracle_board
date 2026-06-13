@@ -19,8 +19,8 @@
         e.preventDefault();
         const title = $(frm.title).val();
         const content = $(frm.content).val();
-        if (title == "" || content == "") {
-            alert("제목과 내용을 입력하세요");
+        if (title == "") {
+            alert("제목을 꼭 입력하세요");
             frm.title.focus();
         } else {
             $.ajax({
@@ -28,6 +28,7 @@
                 url: "/board/insert",
                 data: { title, content, writer: scode },
                 success: function () {
+                    alert("성공");
                     location.href = "/board";
                 }
             })

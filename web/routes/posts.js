@@ -34,7 +34,7 @@ router.post('/insert', async function (req, res) {
     }
 });
 
-/* 게시글 상세 */
+/* 게시글 상세정보 */
 router.get('/view/:id', async function (req, res) {
     const id = req.params.id;
     let con;
