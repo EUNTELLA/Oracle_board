@@ -74,6 +74,15 @@ Oracle Database 실습 리포지토리입니다. 데이터베이스 개론 수�
   - `vposts`, `view_posts` 게시글 목록 뷰 정리
   - 게시글 검색/페이징 화면 구성 정리
 
+### Week 14 - 게시글 등록/조회/수정/삭제 구현
+- 📁 `web/`
+  - 게시글 등록 페이지 구현 (`GET /board/insert`)
+  - 게시글 등록 처리 구현 (`POST /board/insert`)
+  - 게시글 상세 조회 페이지 구현 (`GET /board/view/:id`)
+  - 게시글 수정 페이지 구현 (`GET /board/update/:id`)
+  - 게시글 삭제 처리 구현 (`POST /board/delete`)
+  - 작성자 본인에게만 수정/삭제 버튼이 보이도록 화면 제어
+
 ## 🚀 설치 및 설정
 
 ### 사전 요구사항
@@ -154,6 +163,11 @@ http://localhost:3000
 - `GET /haksa/cou` - 강좌 관리 페이지
 - `GET /board` - 게시글 목록 페이지
 - `GET /board/list.json` - 게시글 목록 JSON 조회
+- `GET /board/insert` - 게시글 등록 페이지
+- `POST /board/insert` - 게시글 등록 처리
+- `GET /board/view/:id` - 게시글 상세 조회 페이지
+- `GET /board/update/:id` - 게시글 수정 페이지
+- `POST /board/delete` - 게시글 삭제 처리
 - `GET /users/login` - 로그인 페이지
 - `POST /users/login` - 로그인 처리
 
